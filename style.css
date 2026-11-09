@@ -1,0 +1,195 @@
+:root {
+  --ink: #0d0b0c;
+  --sun: #b3121b;
+  --petal: #d9453d;
+  --crane: #f3e9e4;
+  --kraft: #c9a58a;
+  --scale: #3a3637;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "Tajawal", system-ui, sans-serif;
+  background: var(--ink);
+  color: var(--crane);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* أمواج سيغايها اليابانية تتحرك ببطء */
+.waves {
+  position: fixed;
+  inset: 0;
+  opacity: .75;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='30'%3E%3Cg fill='%230d0b0c' stroke='%233a3637' stroke-width='1.5'%3E%3Ccircle cx='0' cy='30' r='28'/%3E%3Ccircle cx='0' cy='30' r='20'/%3E%3Ccircle cx='0' cy='30' r='12'/%3E%3Ccircle cx='60' cy='30' r='28'/%3E%3Ccircle cx='60' cy='30' r='20'/%3E%3Ccircle cx='60' cy='30' r='12'/%3E%3Ccircle cx='30' cy='15' r='28'/%3E%3Ccircle cx='30' cy='15' r='20'/%3E%3Ccircle cx='30' cy='15' r='12'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 60px 30px;
+  animation: drift 40s linear infinite;
+}
+@keyframes drift { to { background-position: 360px 180px; } }
+
+/* الشمس الحمراء: العنصر الأبرز */
+.sun {
+  position: fixed;
+  width: min(80vmin, 560px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  background:
+    radial-gradient(circle at 35% 30%, #d3202b 0%, var(--sun) 55%, #7d0b12 100%);
+  box-shadow: 0 0 120px 30px rgba(179, 18, 27, .45);
+  animation: glow 6s ease-in-out infinite;
+}
+@keyframes glow {
+  50% { box-shadow: 0 0 170px 55px rgba(179, 18, 27, .6); scale: 1.03; }
+}
+
+/* بتلات تتساقط */
+.petals span {
+  position: fixed;
+  top: -40px;
+  width: 16px;
+  height: 16px;
+  background: var(--petal);
+  border-radius: 0 100% 0 100%;
+  opacity: .9;
+  animation: fall linear infinite;
+}
+.petals span:nth-child(even) { background: var(--crane); width: 12px; height: 12px; }
+.petals span:nth-child(1)  { left: 6%;  animation-duration: 11s; animation-delay: 0s; }
+.petals span:nth-child(2)  { left: 16%; animation-duration: 14s; animation-delay: 3s; }
+.petals span:nth-child(3)  { left: 27%; animation-duration: 10s; animation-delay: 6s; }
+.petals span:nth-child(4)  { left: 38%; animation-duration: 13s; animation-delay: 1s; }
+.petals span:nth-child(5)  { left: 49%; animation-duration: 12s; animation-delay: 8s; }
+.petals span:nth-child(6)  { left: 60%; animation-duration: 15s; animation-delay: 2s; }
+.petals span:nth-child(7)  { left: 70%; animation-duration: 11s; animation-delay: 5s; }
+.petals span:nth-child(8)  { left: 80%; animation-duration: 13s; animation-delay: 9s; }
+.petals span:nth-child(9)  { left: 89%; animation-duration: 10s; animation-delay: 4s; }
+.petals span:nth-child(10) { left: 95%; animation-duration: 14s; animation-delay: 7s; }
+
+@keyframes fall {
+  0%   { transform: translate(0, 0) rotate(0); }
+  50%  { transform: translate(40px, 55vh) rotate(180deg); }
+  100% { transform: translate(-30px, 110vh) rotate(360deg); }
+}
+
+/* بطاقة الدخول */
+.card {
+  position: relative;
+  width: min(100%, 380px);
+  padding: 36px 30px 30px;
+  background: rgba(13, 11, 12, .82);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--kraft);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .6);
+  animation: enter .9s cubic-bezier(.2, .8, .2, 1) both;
+}
+@keyframes enter {
+  from { opacity: 0; transform: translateY(24px) scale(.97); }
+}
+
+h1 {
+  font-family: "Reem Kufi", sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--crane);
+}
+.sub {
+  margin: 6px 0 24px;
+  color: var(--kraft);
+  font-size: .95rem;
+}
+
+label {
+  display: block;
+  margin: 14px 0 6px;
+  font-size: .9rem;
+  color: var(--crane);
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--crane);
+  background: rgba(243, 233, 228, .06);
+  border: 1px solid var(--scale);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color .25s, box-shadow .25s;
+}
+input::placeholder { color: #8a7f7a; }
+input:focus {
+  border-color: var(--petal);
+  box-shadow: 0 0 0 3px rgba(217, 69, 61, .25);
+}
+
+.pass-wrap { position: relative; }
+.pass-wrap input { padding-inline-end: 76px; }
+#toggle {
+  position: absolute;
+  inset-inline-end: 8px;
+  top: 50%;
+  translate: 0 -50%;
+  background: none;
+  border: 0;
+  color: var(--kraft);
+  font: inherit;
+  font-size: .85rem;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+#toggle:hover { color: var(--crane); }
+
+.login {
+  width: 100%;
+  margin-top: 26px;
+  padding: 13px;
+  font-family: "Reem Kufi", sans-serif;
+  font-size: 1.1rem;
+  color: var(--crane);
+  background: var(--sun);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .25s, transform .15s;
+}
+.login:hover { background: #cf2431; }
+.login:active { transform: scale(.98); }
+
+button:focus-visible { outline: 2px solid var(--crane); outline-offset: 2px; }
+
+#msg { min-height: 1.4em; margin-top: 14px; font-size: .9rem; text-align: center; }
+#msg.ok  { color: #e8d5c8; }
+#msg.err { color: #ff7b72; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+}
+
+/* زر تبديل اللغة */
+.lang {
+  position: fixed;
+  top: 18px;
+  inset-inline-end: 18px;
+  z-index: 2;
+  padding: 8px 16px;
+  font-family: "Tajawal", system-ui, sans-serif;
+  font-size: .95rem;
+  color: var(--crane);
+  background: rgba(13, 11, 12, .7);
+  border: 1px solid var(--kraft);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .25s;
+}
+.lang:hover { background: var(--sun); }
